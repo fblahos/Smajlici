@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Smajlici
@@ -20,11 +19,12 @@ namespace Smajlici
             if (puzzle.FindImages())
             {
                 puzzle.FindPossibleNeighbords();
-                //AlignImages();
-                PrintImageGridNames();
+                AlignImages();
+
             }
 
         }
+
 
         private void AlignImages()
         {
@@ -38,45 +38,19 @@ namespace Smajlici
             image3B.Source = new BitmapImage(new Uri($"/Images/{Puzzle.imageGrid[2, 1].Name}.png", UriKind.Relative));
             image3C.Source = new BitmapImage(new Uri($"/Images/{Puzzle.imageGrid[2, 2].Name}.png", UriKind.Relative));
 
-            RotateTransform rotateTransform = new RotateTransform(Puzzle.imageGrid[0, 0].Rotation);
-            image1A.RenderTransform = rotateTransform;
-
-            rotateTransform = new RotateTransform(Puzzle.imageGrid[0, 1].Rotation);
-            image1B.RenderTransform = rotateTransform;
-
-            rotateTransform = new RotateTransform(Puzzle.imageGrid[0, 2].Rotation);
-            image1C.RenderTransform = rotateTransform;
-
-            rotateTransform = new RotateTransform(Puzzle.imageGrid[1, 0].Rotation);
-            image2A.RenderTransform = rotateTransform;
-
-            rotateTransform = new RotateTransform(Puzzle.imageGrid[1, 1].Rotation);
-            image2B.RenderTransform = rotateTransform;
-
-            rotateTransform = new RotateTransform(Puzzle.imageGrid[1, 2].Rotation);
-            image2C.RenderTransform = rotateTransform;
-
-            rotateTransform = new RotateTransform(Puzzle.imageGrid[2, 0].Rotation);
-            image3A.RenderTransform = rotateTransform;
-
-            rotateTransform = new RotateTransform(Puzzle.imageGrid[2, 1].Rotation);
-            image3B.RenderTransform = rotateTransform;
-
-            rotateTransform = new RotateTransform(Puzzle.imageGrid[2, 2].Rotation);
-            image3C.RenderTransform = rotateTransform;
+            // Předpokládejme, že Puzzle.imageGrid obsahuje informace o rotaci (např. úhel rotace v Puzzle.imageGrid[i, j].RotationAngle)
+            rotateTransform1A.Angle = Puzzle.imageGrid[0, 0].Rotation;
+            rotateTransform1B.Angle = Puzzle.imageGrid[0, 1].Rotation;
+            rotateTransform1C.Angle = Puzzle.imageGrid[0, 2].Rotation;
+            rotateTransform2A.Angle = Puzzle.imageGrid[1, 0].Rotation;
+            rotateTransform2B.Angle = Puzzle.imageGrid[1, 1].Rotation;
+            rotateTransform2C.Angle = Puzzle.imageGrid[1, 2].Rotation;
+            rotateTransform3A.Angle = Puzzle.imageGrid[2, 0].Rotation;
+            rotateTransform3B.Angle = Puzzle.imageGrid[2, 1].Rotation;
+            rotateTransform3C.Angle = Puzzle.imageGrid[2, 2].Rotation;
         }
 
 
-        public void PrintImageGridNames()
-        {
-            for (int i = 0; i < Puzzle.imageGrid.GetLength(0); i++)
-            {
-                for (int j = 0; j < Puzzle.imageGrid.GetLength(1); j++)
-                {
-                    Console.WriteLine(Puzzle.imageGrid[i, j].Name);
-                }
-            }
-        }
 
 
     }

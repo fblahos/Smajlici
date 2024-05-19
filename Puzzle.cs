@@ -6,20 +6,9 @@ namespace Smajlici
     public class Puzzle
     {
         public static List<Image> usedImages = new List<Image>();
-        public static List<Image> usedImagesLeft = new List<Image>();
-        public static List<Image> usedImagesTop = new List<Image>();
-        public static List<Image> usedImagesRight = new List<Image>();
-        public static List<Image> usedImagesBottom = new List<Image>();
-        public static List<Image> imagesLeft = new List<Image>();
-        public static List<Image> imagesTop = new List<Image>();
-        public static List<Image> imagesRight = new List<Image>();
-        public static List<Image> imagesBottom = new List<Image>();
         public static Image[,] imageGrid = new Image[3, 3];
 
-        public Smiley centerLeftSmiley;
-        public Smiley centerTopSmiley;
-        public Smiley centerRightSmiley;
-        public Smiley centerBottomSmiley;
+
 
         public readonly string imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "Images");
 
@@ -37,208 +26,111 @@ namespace Smajlici
             return false;
         }
 
+
         public void FindPossibleNeighbords()
         {
             ClearGrid();
 
             foreach (var image in Image.images)
             {
-                ClearLists();
-                imageGrid[1, 1] = image; // Set center image
+                imageGrid[0, 0] = image; // Set starting image at (0, 0)
 
-
-                foreach (var smiley in image.Smileys)
+                if (SolvePuzzleBacktracking(0, 0))
                 {
-                    switch (smiley.Position)
-                    {
-                        case "left":
-                            imagesLeft = FindImages(smiley.Color, smiley.Shape);
-                            centerLeftSmiley = new Smiley();
-                            centerLeftSmiley.Color = smiley.Color;
-                            centerLeftSmiley.Shape = smiley.Shape;
-                            break;
-
-                        case "top":
-                            imagesTop = FindImages(smiley.Color, smiley.Shape);
-                            centerTopSmiley = new Smiley();
-                            centerTopSmiley.Color = smiley.Color;
-                            centerTopSmiley.Shape = smiley.Shape;
-                            break;
-
-                        case "right":
-                            imagesRight = FindImages(smiley.Color, smiley.Shape);
-                            centerRightSmiley = new Smiley();
-                            centerRightSmiley.Color = smiley.Color;
-                            centerRightSmiley.Shape = smiley.Shape;
-                            break;
-
-                        case "bottom":
-                            imagesBottom = FindImages(smiley.Color, smiley.Shape);
-                            centerBottomSmiley = new Smiley();
-                            centerBottomSmiley.Color = smiley.Color;
-                            centerBottomSmiley.Shape = smiley.Shape;
-                            break;
-                    }
-                }
-
-                imagesLeft.Remove(image);
-                imagesTop.Remove(image);
-                imagesRight.Remove(image);
-                imagesBottom.Remove(image);
-
-                usedImagesBottom.Clear();
-                usedImagesLeft.Clear();
-                usedImagesRight.Clear();
-                usedImagesTop.Clear();
-
-                if (SolvePuzzleCenter()) { break; }
-            }
-        }
-
-        private bool SolvePuzzleCenter()
-        {
-            ClearUsedImages();
-
-            foreach (var image in imagesLeft)
-            {
-                if (!usedImages.Contains(image) & (!usedImagesLeft.Contains(image)))
-                {
-                    imageGrid[1, 0] = image;
-                    usedImages.Add(image);
-                    usedImagesLeft.Add(image);
-                    RotateImages(image, "right");
                     break;
                 }
             }
-            foreach (var image in imagesTop)
-            {
-                if (!usedImages.Contains(image) & (!usedImagesTop.Contains(image)))
-                {
-                    imageGrid[0, 1] = image;
-                    usedImages.Add(image);
-                    usedImagesTop.Add(image);
-                    RotateImages(image, "bottom");
-                    break;
-
-                }
-            }
-            foreach (var image in imagesRight)
-            {
-                if (!usedImages.Contains(image) & (!usedImagesRight.Contains(image)))
-                {
-                    imageGrid[1, 2] = image;
-                    usedImages.Add(image);
-                    usedImagesRight.Add(image);
-                    RotateImages(image, "left");
-                    break;
-
-                }
-            }
-            foreach (var image in imagesBottom)
-            {
-                if (!usedImages.Contains(image) & (!usedImagesBottom.Contains(image)))
-                {
-                    imageGrid[2, 1] = image;
-                    usedImages.Add(image);
-                    usedImagesBottom.Add(image);
-                    RotateImages(image, "top");
-                    break;
-
-                }
-            }
-            return false;
         }
 
-
-
-
-        public bool IsValid()
+        private bool SolvePuzzleBacktracking(int row, int col)
         {
-
-
-            return false;
-        }
-
-
-
-
-
-
-
-
-
-        public void RotateImages(Image image, string targetPosition)
-        {
-            foreach (var smiley in image.Smileys)
+            if (row == 3)
             {
-                if (targetPosition == "left")
-                {
-                    if ((smiley.Color == centerRightSmiley.Color) & (smiley.Shape != centerRightSmiley.Shape))
-                    {
-                        while (smiley.Position != targetPosition)
-                        {
-                            image.RotateClockwise(image);
-                        }
-                    }
-                }
-
-                if (targetPosition == "top")
-                {
-                    if ((smiley.Color == centerBottomSmiley.Color) & (smiley.Shape != centerBottomSmiley.Shape))
-                    {
-                        while (smiley.Position != targetPosition)
-                        {
-                            image.RotateClockwise(image);
-                        }
-                    }
-                }
-
-
-                if (targetPosition == "right")
-                {
-                    if ((smiley.Color == centerLeftSmiley.Color) & (smiley.Shape != centerLeftSmiley.Shape))
-                    {
-                        while (smiley.Position != targetPosition)
-                        {
-                            image.RotateClockwise(image);
-                        }
-                    }
-                }
-
-                if (targetPosition == "bottom")
-                {
-                    if ((smiley.Color == centerTopSmiley.Color) & (smiley.Shape != centerTopSmiley.Shape))
-                    {
-                        while (smiley.Position != targetPosition)
-                        {
-                            image.RotateClockwise(image);
-                        }
-                    }
-                }
+                return true; // Pokud jsme prošli všechny řádky, puzzle je vyřešené
             }
 
-        }
-
-
-        public static List<Image> FindImages(string color, string shape)
-        {
-            List<Image> result = new List<Image>();
+            // Příští pozice
+            int nextRow = (col == 2) ? row + 1 : row;
+            int nextCol = (col == 2) ? 0 : col + 1;
 
             foreach (var image in Image.images)
             {
-                foreach (var smiley in image.Smileys)
+                if (!usedImages.Contains(image))
                 {
-                    if (smiley.Color == color && smiley.Shape != shape)
-                    {
-                        result.Add(image);
+                    usedImages.Add(image);
 
+                    for (int i = 0; i < 4; i++) // Vyzkoušíme všechny čtyři rotace
+                    {
+                        image.RotateClockwise(); // Otočíme obrázek
+                        imageGrid[row, col] = image;
+
+                        if (IsValid(row, col) && SolvePuzzleBacktracking(nextRow, nextCol))
+                        {
+                            return true;
+                        }
                     }
+
+                    usedImages.Remove(image);
+                    imageGrid[row, col] = null;
                 }
             }
-            return result;
+
+            return false;
         }
 
+        private bool IsValid(int row, int col)
+        {
+            var image = imageGrid[row, col];
 
+            // Ověřování sousedů
+            if (row > 0 && imageGrid[row - 1, col] != null) // Ověřujeme obrázek nahoře
+            {
+                if (!Matches(image, imageGrid[row - 1, col], "top"))
+                {
+                    return false;
+                }
+            }
+            if (row < 2 && imageGrid[row + 1, col] != null) // Ověřujeme obrázek dole
+            {
+                if (!Matches(image, imageGrid[row + 1, col], "bottom"))
+                {
+                    return false;
+                }
+            }
+            if (col > 0 && imageGrid[row, col - 1] != null) // Ověřujeme obrázek vlevo
+            {
+                if (!Matches(image, imageGrid[row, col - 1], "left"))
+                {
+                    return false;
+                }
+            }
+            if (col < 2 && imageGrid[row, col + 1] != null) // Ověřujeme obrázek vpravo
+            {
+                if (!Matches(image, imageGrid[row, col + 1], "right"))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool Matches(Image currentImage, Image neighborImage, string direction)
+        {
+            switch (direction)
+            {
+                case "top":
+                    return currentImage.GetSmiley("top").CompareTwoSmiley(neighborImage.GetSmiley("bottom"));
+                case "bottom":
+                    return currentImage.GetSmiley("bottom").CompareTwoSmiley(neighborImage.GetSmiley("top"));
+                case "left":
+                    return currentImage.GetSmiley("left").CompareTwoSmiley(neighborImage.GetSmiley("right"));
+                case "right":
+                    return currentImage.GetSmiley("right").CompareTwoSmiley(neighborImage.GetSmiley("left"));
+                default:
+                    throw new ArgumentException("Neplatný směr ověření.");
+            }
+        }
 
 
         public void ClearGrid()
@@ -246,19 +138,9 @@ namespace Smajlici
             Array.Clear(imageGrid, 0, imageGrid.Length);
         }
 
-        public void ClearLists()
-        {
-            imagesLeft.Clear();
-            imagesTop.Clear();
-            imagesRight.Clear();
-            imagesBottom.Clear();
-        }
 
-        public void ClearUsedImages()
-        {
-            usedImages.Clear();
 
-        }
+
 
 
     }

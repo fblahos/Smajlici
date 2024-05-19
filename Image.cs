@@ -82,31 +82,22 @@
         }
 
 
-        public void RotateClockwise(Image image)
+        public void RotateClockwise()
         {
-            foreach (var smiley in image.Smileys)
+            foreach (var smiley in Smileys)
             {
-                switch (smiley.Position)
-                {
-                    case "left":
-                        smiley.Position = "top";
-                        break;
-                    case "top":
-                        smiley.Position = "right";
-                        break;
-                    case "right":
-                        smiley.Position = "bottom";
-                        break;
-                    case "bottom":
-                        smiley.Position = "left";
-                        break;
-                }
+                smiley.RotateClockwise();
             }
-
-            image.Rotation = (image.Rotation + 90) % 360;
+            this.Rotation = (this.Rotation + 90) % 360;
         }
 
 
+        public Smiley GetSmiley(string position)
+        {
+            return Smileys.FirstOrDefault(s => s.Position == position);
+        }
+
     }
+
 }
 
