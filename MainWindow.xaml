@@ -1,0 +1,48 @@
+﻿<Window x:Class="Smajlici.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Smajlici"
+        mc:Ignorable="d"
+        Title="Smajlici" Height="1050" Width="1050" WindowStartupLocation="CenterScreen"
+        FontSize="16" FontFamily="Segoe UI">
+    
+    <Grid Margin="20" >
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition  Height="50"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+                       
+            <Image x:Name="image1A" Grid.Row="0" Grid.Column="0" Source="images/1A.png" />
+            <Image x:Name="image1B" Grid.Row="0" Grid.Column="1" Source="images/1B.png" />
+            <Image x:Name="image1C" Grid.Row="0" Grid.Column="2" Source="images/1C.png" />
+            <Image x:Name="image2A" Grid.Row="1" Grid.Column="0" Source="images/2A.png" />
+            <Image x:Name="image2B" Grid.Row="1" Grid.Column="1" Source="images/2B.png" />
+            <Image x:Name="image2C" Grid.Row="1" Grid.Column="2" Source="images/2C.png" />
+            <Image x:Name="image3A" Grid.Row="2" Grid.Column="0" Source="images/3A.png" />
+            <Image x:Name="image3B" Grid.Row="2" Grid.Column="1" Source="images/3B.png" />
+            <Image x:Name="image3C" Grid.Row="2" Grid.Column="2" Source="images/3C.png" />
+        </Grid>
+        
+        
+        <Button x:Name="SolvePuzzleButton" Content="Vyřešit hlavolam" Grid.Column="0" Grid.Row="1" Height="40" Width="130" FontWeight="Bold"
+                Background="#FF1D5BA8" Foreground="White" Click="SolvePuzzleButton_Click">
+            
+            
+        </Button>
+
+    </Grid>
+</Window>
