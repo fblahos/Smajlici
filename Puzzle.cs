@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Windows;
 
 
 namespace Smajlici
@@ -37,33 +36,6 @@ namespace Smajlici
             }
             return false;
         }
-
-
-        public void FillGridWithImagesStart()
-        {
-
-            if (FindImages() & Image.images.Count == 9)
-            {
-                Image.images = Image.images.OrderBy(x => x.Name).ToList();
-
-                int index = 0;
-                for (int i = 0; i < 3; i++)
-                {
-                    for (int j = 0; j < 3; j++)
-                    {
-                        imageGrid[i, j] = Image.images[index++];
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("Images not found");
-            }
-
-
-
-        }
-
 
         public void FindPossibleNeighbords()
         {
@@ -114,59 +86,86 @@ namespace Smajlici
                 imagesRight.Remove(image);
                 imagesBottom.Remove(image);
 
-                if (SolvePuzzle()) { break; }
+                usedImagesBottom.Clear();
+                usedImagesLeft.Clear();
+                usedImagesRight.Clear();
+                usedImagesTop.Clear();
+
+                if (SolvePuzzleCenter()) { break; }
             }
         }
 
-        private bool SolvePuzzle()
+        private bool SolvePuzzleCenter()
         {
             ClearUsedImages();
 
             foreach (var image in imagesLeft)
             {
-                if (!usedImages.Contains(image))
+                if (!usedImages.Contains(image) & (!usedImagesLeft.Contains(image)))
+                {
+                    imageGrid[1, 0] = image;
+                    usedImages.Add(image);
+                    usedImagesLeft.Add(image);
+                    RotateImages(image, "right");
+                    break;
+                }
+            }
+            foreach (var image in imagesTop)
+            {
+                if (!usedImages.Contains(image) & (!usedImagesTop.Contains(image)))
                 {
                     imageGrid[0, 1] = image;
                     usedImages.Add(image);
+                    usedImagesTop.Add(image);
+                    RotateImages(image, "bottom");
+                    break;
+
+                }
+            }
+            foreach (var image in imagesRight)
+            {
+                if (!usedImages.Contains(image) & (!usedImagesRight.Contains(image)))
+                {
+                    imageGrid[1, 2] = image;
+                    usedImages.Add(image);
+                    usedImagesRight.Add(image);
                     RotateImages(image, "left");
                     break;
+
                 }
-                foreach (var imageA in imagesTop)
-                {
-                    if (!usedImages.Contains(imageA))
-                    {
-                        imageGrid[1, 0] = imageA;
-                        usedImages.Add(imageA);
-                        break;
-
-                    }
-                    foreach (var imageB in imagesRight)
-                    {
-                        if (!usedImages.Contains(imageB))
-                        {
-                            imageGrid[2, 1] = imageB;
-                            usedImages.Add(imageB);
-                            break;
-
-                        }
-                        foreach (var imageC in imagesBottom)
-                        {
-                            if (!usedImages.Contains(imageC))
-                            {
-                                imageGrid[1, 2] = imageC;
-                                usedImages.Add(imageC);
-                                break;
-
-                            }
-                        }
-                    }
-                }
-
-
             }
+            foreach (var image in imagesBottom)
+            {
+                if (!usedImages.Contains(image) & (!usedImagesBottom.Contains(image)))
+                {
+                    imageGrid[2, 1] = image;
+                    usedImages.Add(image);
+                    usedImagesBottom.Add(image);
+                    RotateImages(image, "top");
+                    break;
+
+                }
+            }
+            return false;
+        }
+
+
+
+
+        public bool IsValid()
+        {
+
 
             return false;
         }
+
+
+
+
+
+
+
+
 
         public void RotateImages(Image image, string targetPosition)
         {
@@ -232,7 +231,7 @@ namespace Smajlici
                     if (smiley.Color == color && smiley.Shape != shape)
                     {
                         result.Add(image);
-                        break;
+
                     }
                 }
             }
@@ -260,6 +259,8 @@ namespace Smajlici
             usedImages.Clear();
 
         }
+
+
     }
 }
 
