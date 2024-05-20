@@ -5,99 +5,93 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Smajlici"
         mc:Ignorable="d"
-        Title="Smajlici" Height="1000" Width="1000" WindowStartupLocation="CenterScreen"
-        FontSize="16" FontFamily="Segoe UI">
+        Title="Smajlici" Height="1080" Width="1000" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow"
+        FontSize="16" FontFamily="Segoe UI" Icon="icon.png">
     
-    <Grid Margin="20" >
+    <Grid Margin="20">
           <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition  Height="50"/>
+            <RowDefinition  Height="60"/>
         </Grid.RowDefinitions>
-
-        <Grid Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+        
+        <Grid Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0">
+            <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
 
-            <Image x:Name="image1A" Grid.Row="0" Grid.Column="0" Source="images/1A.png" Stretch="Uniform"
+            <Image x:Name="image1A" Grid.Row="0" Grid.Column="0" Source="images/1A.png" Stretch="Fill"
                     RenderTransformOrigin="0.5,0.5">
                 <Image.RenderTransform>
                     <RotateTransform x:Name="rotateTransform1A" />
                 </Image.RenderTransform>
             </Image>
-            <Image x:Name="image1B" Grid.Row="0" Grid.Column="1" Source="images/1B.png" Stretch="Uniform"
+            
+            <Image x:Name="image1B" Grid.Row="0" Grid.Column="1" Source="images/1B.png" Stretch="Fill"
                     RenderTransformOrigin="0.5,0.5">
                 <Image.RenderTransform>
                     <RotateTransform x:Name="rotateTransform1B" />
                 </Image.RenderTransform>
             </Image>
-            <Image x:Name="image1C" Grid.Row="0" Grid.Column="2" Source="images/1C.png" Stretch="Uniform"
+            
+            <Image x:Name="image1C" Grid.Row="0" Grid.Column="2" Source="images/1C.png" Stretch="Fill"
                     RenderTransformOrigin="0.5,0.5">
                 <Image.RenderTransform>
                     <RotateTransform x:Name="rotateTransform1C" />
                 </Image.RenderTransform>
             </Image>
-            <Image x:Name="image2A" Grid.Row="1" Grid.Column="0" Source="images/2A.png" Stretch="Uniform"
+            
+            <Image x:Name="image2A" Grid.Row="1" Grid.Column="0" Source="images/2A.png" Stretch="Fill"
                     RenderTransformOrigin="0.5,0.5">
                 <Image.RenderTransform>
                     <RotateTransform x:Name="rotateTransform2A" />
                 </Image.RenderTransform>
             </Image>
-            <Image x:Name="image2B" Grid.Row="1" Grid.Column="1" Source="images/2B.png" Stretch="Uniform"
+            
+            <Image x:Name="image2B" Grid.Row="1" Grid.Column="1" Source="images/2B.png" Stretch="Fill"
                     RenderTransformOrigin="0.5,0.5">
                 <Image.RenderTransform>
                     <RotateTransform x:Name="rotateTransform2B" />
                 </Image.RenderTransform>
             </Image>
-            <Image x:Name="image2C" Grid.Row="1" Grid.Column="2" Source="images/2C.png" Stretch="Uniform"
+            
+            <Image x:Name="image2C" Grid.Row="1" Grid.Column="2" Source="images/2C.png" Stretch="Fill"
                     RenderTransformOrigin="0.5,0.5">
                 <Image.RenderTransform>
                     <RotateTransform x:Name="rotateTransform2C" />
                 </Image.RenderTransform>
             </Image>
-            <Image x:Name="image3A" Grid.Row="2" Grid.Column="0" Source="images/3A.png" Stretch="Uniform"
+            
+            <Image x:Name="image3A" Grid.Row="2" Grid.Column="0" Source="images/3A.png" Stretch="Fill"
                     RenderTransformOrigin="0.5,0.5">
                 <Image.RenderTransform>
                     <RotateTransform x:Name="rotateTransform3A" />
                 </Image.RenderTransform>
             </Image>
-            <Image x:Name="image3B" Grid.Row="2" Grid.Column="1" Source="images/3B.png" Stretch="Uniform"
+            
+            <Image x:Name="image3B" Grid.Row="2" Grid.Column="1" Source="images/3B.png" Stretch="Fill"
                     RenderTransformOrigin="0.5,0.5">
                 <Image.RenderTransform>
                     <RotateTransform x:Name="rotateTransform3B" />
                 </Image.RenderTransform>
             </Image>
-            <Image x:Name="image3C" Grid.Row="2" Grid.Column="2" Source="images/3C.png" Stretch="Uniform"
+            
+            <Image x:Name="image3C" Grid.Row="2" Grid.Column="2" Source="images/3C.png" Stretch="Fill"
                     RenderTransformOrigin="0.5,0.5">
                 <Image.RenderTransform>
                     <RotateTransform x:Name="rotateTransform3C" />
                 </Image.RenderTransform>
             </Image>
 
-            <!--<Image x:Name="image1A" Grid.Row="0" Grid.Column="0" Source="images/1A.png" />
-            <Image x:Name="image1B" Grid.Row="0" Grid.Column="1" Source="images/1B.png" />
-            <Image x:Name="image1C" Grid.Row="0" Grid.Column="2" Source="images/1C.png" />
-            <Image x:Name="image2A" Grid.Row="1" Grid.Column="0" Source="images/2A.png" />
-            <Image x:Name="image2B" Grid.Row="1" Grid.Column="1" Source="images/2B.png" />
-            <Image x:Name="image2C" Grid.Row="1" Grid.Column="2" Source="images/2C.png" />
-            <Image x:Name="image3A" Grid.Row="2" Grid.Column="0" Source="images/3A.png" />
-            <Image x:Name="image3B" Grid.Row="2" Grid.Column="1" Source="images/3B.png" />
-            <Image x:Name="image3C" Grid.Row="2" Grid.Column="2" Source="images/3C.png" />-->
         </Grid>
-        
-        
-        <Button x:Name="SolvePuzzleButton" Content="Vyřešit hlavolam" Grid.Column="0" Grid.Row="1" Height="40" Width="130" FontWeight="Bold"
-                Background="#FF1D5BA8" Foreground="White" Click="SolvePuzzleButton_Click">
-            
-            
-        </Button>
+
+            <Button Style="{StaticResource buttonStyle}" Click="SolvePuzzleButton_Click" />
 
     </Grid>
 </Window>

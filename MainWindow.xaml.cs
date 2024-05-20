@@ -5,8 +5,6 @@ namespace Smajlici
 {
     public partial class MainWindow : Window
     {
-
-
         public MainWindow()
         {
             InitializeComponent();
@@ -18,11 +16,9 @@ namespace Smajlici
 
             if (puzzle.FindImages())
             {
-                puzzle.FindPossibleNeighbords();
+                puzzle.SolvePuzzle();
                 AlignImages();
-
             }
-
         }
 
 
@@ -38,7 +34,7 @@ namespace Smajlici
             image3B.Source = new BitmapImage(new Uri($"/Images/{Puzzle.imageGrid[2, 1].Name}.png", UriKind.Relative));
             image3C.Source = new BitmapImage(new Uri($"/Images/{Puzzle.imageGrid[2, 2].Name}.png", UriKind.Relative));
 
-            // Předpokládejme, že Puzzle.imageGrid obsahuje informace o rotaci (např. úhel rotace v Puzzle.imageGrid[i, j].RotationAngle)
+
             rotateTransform1A.Angle = Puzzle.imageGrid[0, 0].Rotation;
             rotateTransform1B.Angle = Puzzle.imageGrid[0, 1].Rotation;
             rotateTransform1C.Angle = Puzzle.imageGrid[0, 2].Rotation;

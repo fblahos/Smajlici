@@ -5,12 +5,9 @@ namespace Smajlici
 {
     public class Puzzle
     {
-        public static List<Image> usedImages = new List<Image>();
+        private static List<Image> usedImages = new List<Image>();
         public static Image[,] imageGrid = new Image[3, 3];
-
-
-
-        public readonly string imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "Images");
+        private readonly string imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "Images");
 
 
         public bool FindImages()
@@ -19,7 +16,7 @@ namespace Smajlici
             {
                 foreach (var imagePath in Directory.GetFiles(imagesPath))
                 {
-                    Image obrazek = new Image(Path.GetFileNameWithoutExtension(imagePath));
+                    Image image = new Image(Path.GetFileNameWithoutExtension(imagePath));
                 }
                 return true;
             }
@@ -27,31 +24,33 @@ namespace Smajlici
         }
 
 
-        public void FindPossibleNeighbords()
+        public void SolvePuzzle()
         {
             ClearGrid();
 
+            //Postupně všechny obrázky umístím na souřadnice 0,0
             foreach (var image in Image.images)
             {
-                imageGrid[0, 0] = image; // Set starting image at (0, 0)
+                imageGrid[0, 0] = image;
 
-                if (SolvePuzzleBacktracking(0, 0))
+                if (PuzzleBacktracking(0, 0))
                 {
                     break;
                 }
             }
         }
 
-        private bool SolvePuzzleBacktracking(int row, int col)
+        private bool PuzzleBacktracking(int row, int column)
         {
-            if (row == 3)
+            //Pokud je řádek větší než 2 tak je puzzle vyřešeno
+            if (row > 2)
             {
-                return true; // Pokud jsme prošli všechny řádky, puzzle je vyřešené
+                return true;
             }
 
-            // Příští pozice
-            int nextRow = (col == 2) ? row + 1 : row;
-            int nextCol = (col == 2) ? 0 : col + 1;
+            int nextRow = (column == 2) ? row + 1 : row;
+            int nextColumn = (column == 2) ? nextColumn = 0 : nextColumn = column + 1;
+
 
             foreach (var image in Image.images)
             {
@@ -59,54 +58,54 @@ namespace Smajlici
                 {
                     usedImages.Add(image);
 
-                    for (int i = 0; i < 4; i++) // Vyzkoušíme všechny čtyři rotace
+                    for (int i = 0; i < 4; i++)
                     {
-                        image.RotateClockwise(); // Otočíme obrázek
-                        imageGrid[row, col] = image;
+                        image.RotateClockwise();
+                        imageGrid[row, column] = image;
 
-                        if (IsValid(row, col) && SolvePuzzleBacktracking(nextRow, nextCol))
+                        if (IsValid(row, column) && PuzzleBacktracking(nextRow, nextColumn))
                         {
                             return true;
                         }
                     }
 
                     usedImages.Remove(image);
-                    imageGrid[row, col] = null;
+                    imageGrid[row, column] = null;
                 }
             }
 
             return false;
         }
 
-        private bool IsValid(int row, int col)
+        private bool IsValid(int row, int column)
         {
-            var image = imageGrid[row, col];
+            var image = imageGrid[row, column];
 
             // Ověřování sousedů
-            if (row > 0 && imageGrid[row - 1, col] != null) // Ověřujeme obrázek nahoře
+            if (row > 0 && imageGrid[row - 1, column] != null)
             {
-                if (!Matches(image, imageGrid[row - 1, col], "top"))
+                if (!Matches(image, imageGrid[row - 1, column], "top"))
                 {
                     return false;
                 }
             }
-            if (row < 2 && imageGrid[row + 1, col] != null) // Ověřujeme obrázek dole
+            if (row < 2 && imageGrid[row + 1, column] != null)
             {
-                if (!Matches(image, imageGrid[row + 1, col], "bottom"))
+                if (!Matches(image, imageGrid[row + 1, column], "bottom"))
                 {
                     return false;
                 }
             }
-            if (col > 0 && imageGrid[row, col - 1] != null) // Ověřujeme obrázek vlevo
+            if (column > 0 && imageGrid[row, column - 1] != null)
             {
-                if (!Matches(image, imageGrid[row, col - 1], "left"))
+                if (!Matches(image, imageGrid[row, column - 1], "left"))
                 {
                     return false;
                 }
             }
-            if (col < 2 && imageGrid[row, col + 1] != null) // Ověřujeme obrázek vpravo
+            if (column < 2 && imageGrid[row, column + 1] != null)
             {
-                if (!Matches(image, imageGrid[row, col + 1], "right"))
+                if (!Matches(image, imageGrid[row, column + 1], "right"))
                 {
                     return false;
                 }
@@ -120,13 +119,13 @@ namespace Smajlici
             switch (direction)
             {
                 case "top":
-                    return currentImage.GetSmiley("top").CompareTwoSmiley(neighborImage.GetSmiley("bottom"));
+                    return currentImage.GetSmiley("top").CompareSmileys(neighborImage.GetSmiley("bottom"));
                 case "bottom":
-                    return currentImage.GetSmiley("bottom").CompareTwoSmiley(neighborImage.GetSmiley("top"));
+                    return currentImage.GetSmiley("bottom").CompareSmileys(neighborImage.GetSmiley("top"));
                 case "left":
-                    return currentImage.GetSmiley("left").CompareTwoSmiley(neighborImage.GetSmiley("right"));
+                    return currentImage.GetSmiley("left").CompareSmileys(neighborImage.GetSmiley("right"));
                 case "right":
-                    return currentImage.GetSmiley("right").CompareTwoSmiley(neighborImage.GetSmiley("left"));
+                    return currentImage.GetSmiley("right").CompareSmileys(neighborImage.GetSmiley("left"));
                 default:
                     throw new ArgumentException("Neplatný směr ověření.");
             }

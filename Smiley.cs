@@ -25,7 +25,7 @@
             }
         }
 
-        public bool CompareTwoSmiley(Smiley smileyB)
+        public bool CompareSmileys(Smiley smileyB)
         {
             return this.Color == smileyB.Color && this.Shape != smileyB.Shape;
         }

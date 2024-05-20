@@ -88,7 +88,7 @@
             {
                 smiley.RotateClockwise();
             }
-            this.Rotation = (this.Rotation + 90) % 360;
+            Rotation = (Rotation + 90) % 360;
         }
 
 
